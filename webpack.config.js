@@ -42,13 +42,14 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               esModule: false,
+              publicPath: '../',
             },
           },
           "css-loader"],
       },
       {
-        test: /\.(png|svg|jpe?g|gif)$/,
-        use: [
+        test: /\.(|svg|jpe?g|gif|png)$/,       
+         use: [
           {
             loader: "file-loader", 
             options: {
@@ -57,6 +58,26 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(svg|eot|woff|woff2|ttf)$/,
+        use: [
+          {
+            loader: "file-loader", 
+            options: {
+              name: '[name].[ext]',
+              outputPath: "fonts",
+              esModule: false,
+            }
+          }
+        ]
+      },
+      {
+        test: require.resolve("jquery"),
+        loader: "expose-loader",
+        options: {
+          exposes: ["$", "jQuery"],
+        },
       },
     ],
   },
